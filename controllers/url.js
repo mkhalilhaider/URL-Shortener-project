@@ -1,5 +1,5 @@
-const URL = require("../models/url.js");
 const { nanoid } = require("nanoid");
+const URL = require("../models/url.js");
 
 async function handleGenerateNewShortUrl(req, res) {
   const body = req.body;
@@ -14,7 +14,9 @@ async function handleGenerateNewShortUrl(req, res) {
     visitHistory: [],
   });
 
-  res.json({ id: shortId });
+  return res.render("home", {
+    shortUrl: `http://localhost:${process.env.PORT}/${shortId}`,
+  });
 }
 
 async function handleGetIdAndRedirect(req, res) {
