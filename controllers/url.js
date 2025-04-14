@@ -3,14 +3,11 @@ const { nanoid } = require("nanoid");
 
 async function handleGenerateNewShortUrl(req, res) {
   const body = req.body;
-  // console.log(body)
-  console.log(body.url)
   if (!body.url) {
     return res.status(400).json({ msg: "URL is required!" });
   }
 
   const shortId = nanoid(8);
-console.log(shortId)
   await URL.create({
     shortId: shortId,
     redirectUrl: body.url,
@@ -22,7 +19,7 @@ console.log(shortId)
 
 async function handleGetIdAndRedirect(req, res) {
   const shortId = req.params.id;
-  console.log(("redirect func clg", shortId));
+  console.log("Redirect function triggered with shortId:", shortId);
   const entry = await URL.findOneAndUpdate(
     {
       shortId,
@@ -33,12 +30,15 @@ async function handleGetIdAndRedirect(req, res) {
           timeStamp: Date.now(),
         },
       },
-    }
+    },
+    { new: true }
   );
-  // console.log(entry)
   if (!entry) {
     return res.status(404).json({ error: "Short URL not found" });
   }
+
+  console.log("Found entry:", entry);
+  console.log("Redirecting to:", entry.redirectUrl);
 
   res.redirect(entry.redirectUrl);
 }

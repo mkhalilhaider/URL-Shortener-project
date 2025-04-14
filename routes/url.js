@@ -8,6 +8,6 @@ const {
 
 router.post("/", handleGenerateNewShortUrl);
 router.get("/:id", handleGetIdAndRedirect);
-router.get("/url/analytics/:id", handleGetAnalyticsById);
+router.get("/analytics/:id", handleGetAnalyticsById);
 
 module.exports = router;

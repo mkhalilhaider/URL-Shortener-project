@@ -1,8 +1,10 @@
 const express = require("express");
 const { connectToMongoDb } = require("./config/connection.js");
 const urlRoutes = require("./routes/url.js");
+
 const dotenv = require("dotenv");
 dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT;
 
@@ -14,8 +16,8 @@ connectToMongoDb(process.env.mongoDbConnectionString)
   .catch(() => console.log("Something went wrong!"));
 
 // routes
-app.use("/url", urlRoutes);
 app.use("/", urlRoutes);
+
 // server listen
 app.listen(PORT, (err) => {
   if (err) {
